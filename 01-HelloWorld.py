@@ -92,3 +92,5 @@ print(type(myVar))
 # define a set
 myVar = {1, 'hello', 3, "world"}
 print(type(myVar))
+
+input("")
