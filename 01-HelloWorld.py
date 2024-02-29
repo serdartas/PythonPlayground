@@ -93,4 +93,23 @@ print(type(myVar))
 myVar = {1, 'hello', 3, "world"}
 print(type(myVar))
 
-input("")
+
+# Try Catch
+try:
+    1/0
+except:
+    print("Error!")
+
+# Try catch with the exception itself
+try:
+    1/0
+except Exception as e:
+    print("Error!", e)
+
+# Try catch with the specifit error types
+try:
+    1/0
+except ZeroDivisionError:
+    print("Zero division error")
+except Exception as e:
+    print("Error!", e)
