@@ -89,3 +89,34 @@ person = Manager(1, "Serdar", "Engineering Manager", "Technology", 105000, 20)
 
 person.makeRaise(0.05)
 print(str(person))
+
+
+# Abstract methods
+# For creating abstract methods you need to import abstract base classes (called abc)
+from abc import ABC, abstractmethod
+
+# Create an animal class that inherits ABC
+class Animal(ABC):
+    def print(self):
+        print("I am an animal")
+    
+    # an abstract method
+    @abstractmethod
+    def makeSound(self):
+        pass
+
+# Create a lion class
+class Lion(Animal):
+    def print(self):
+        print("I am a lion")
+
+    def printMySuper(self):
+        return super().print()
+    
+    def makeSound(self):
+        print("RoaarRR")
+    
+lion = Lion()
+lion.printMySuper()
+lion.print()
+lion.makeSound()
