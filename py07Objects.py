@@ -120,3 +120,5 @@ lion = Lion()
 lion.printMySuper()
 lion.print()
 lion.makeSound()
+help(lion)
+
