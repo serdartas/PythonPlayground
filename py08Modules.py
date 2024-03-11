@@ -42,3 +42,8 @@ else:
 from importlib import reload
 reload(ip)
 
+
+# OS____________________________--
+import os
+print('CPU Count',os.cpu_count())
+
