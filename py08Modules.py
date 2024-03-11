@@ -42,3 +42,8 @@ else:
 from importlib import reload
 reload(isPrime)
 
+
+# OS____________________________--
+import os
+print('CPU Count',os.cpu_count())
+
