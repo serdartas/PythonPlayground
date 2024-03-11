@@ -31,8 +31,8 @@ print(py01HelloWorld.add_two_numbers(1,2))
 # You can add a folder to path using sys.path.insert()
 sys.path.insert(1, r'./practices')
 
-import isPrime
-if isPrime.isPrime(123):
+import isPrime as ip
+if ip.isPrime(123):
     print("123 is a prime number")
 else:
     print("123 is not a prime number")
@@ -40,5 +40,5 @@ else:
 # reload function cna be used to reload the imported module. This could be useful for dynamicly changing modules\
 # imported 
 from importlib import reload
-reload(isPrime)
+reload(ip)
 
