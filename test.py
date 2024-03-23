@@ -1,7 +1,16 @@
-bravo = 3
-b = B()
+class A:
+   def a(self):
+       return "Function inside A"
+
 class B:
-    bravo = 5
-    print("Inside class B")
-c = B()
-print(b.bravo)
+   def a(self):
+       return "Function inside B"
+
+class C:
+   pass
+
+class D(C, A, B):
+   pass
+
+d = D()
+print(d.a())

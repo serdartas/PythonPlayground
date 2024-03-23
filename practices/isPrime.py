@@ -1,4 +1,6 @@
 def isPrime(intNum):
+    if intNum == 0:
+        return False
     if intNum < 4:
         return True
     for num in range(2,int(intNum**0.5)+1):
