@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `LittleLemonDB` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `LittleLemonDB`;
--- MySQL dump 10.13  Distrib 8.0.33, for macos13 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for macos14 (x86_64)
 --
 -- Host: 127.0.0.1    Database: LittleLemonDB
 -- ------------------------------------------------------
