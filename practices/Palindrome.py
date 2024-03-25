@@ -8,6 +8,8 @@ def isPalindrome(word):
         return False
     return isPalindrome(word[1:len(word)-1])
 
-print("To check if a word is a palindrome")
-word = input("Enter a word: ")
-print(word, " is", "" if isPalindrome(word) else " not", " a palindrome", sep = "")
+# __name__ returns __main__ when file is executed directly
+if __name__ == "__main__":
+    print("To check if a word is a palindrome")
+    word = input("Enter a word: ")
+    print(word, " is", "" if isPalindrome(word) else " not", " a palindrome", sep = "")

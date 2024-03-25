@@ -1,5 +1,5 @@
 import yfinance as yf
-import requests
+from model import Country, City, State, Industry, Sector, Currency, Company, session
 
 def all_tickers():
     symbol = str()
@@ -27,4 +27,14 @@ def parse_symbol(symbol, file_path):
 
 
 if __name__ == "__main__":
-    parse_symbol("MSFT", "./stocks/msft.json")
+    #parse_symbol("MSFT", "./stocks/msft.json")
+    country = Country()
+    country.CountryName = "Turkey"
+    country.save(session)
+    print(country.CountryId, country.CountryName)
+
+    city = City()
+    city.CityName = "Istanbul"
+    city.CountryId = session.query(Country).filter_by(CountryName='Turkey').first().CountryId
+    city.save(session)
+    print(city.CityId, city.CityName, city.CountryId)
