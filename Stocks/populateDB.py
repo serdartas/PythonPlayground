@@ -13,8 +13,9 @@ def all_tickers():
                 for letter4 in letters:
                     symbol = letter1 + letter2 + letter3 + letter4
                     ticker = yf.Ticker(symbol)
-                    if "symbol" not in ticker.info:
+                    if not yf.Ticker(symbol).history(period="1mo").empty:
                         continue
+                    parse_symbol(symbol, "./stocks/" + symbol + ".json")
     return tickers
 
 def parse_symbol(symbol, file_path):
@@ -24,6 +25,11 @@ def parse_symbol(symbol, file_path):
         for key in dict:
             f.write('"' + key + '":"' + str(dict[key]) + '",\n')
 
+def save_company(symbol):
+    company = Company()
+    company.Ticker = symbol
+    company.save(session)
+    return company
 
 
 if __name__ == "__main__":
@@ -38,3 +44,5 @@ if __name__ == "__main__":
     city.CountryId = session.query(Country).filter_by(CountryName='Turkey').first().CountryId
     city.save(session)
     print(city.CityId, city.CityName, city.CountryId)
+
+    save_company("MSFT")

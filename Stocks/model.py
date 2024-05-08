@@ -67,6 +67,26 @@ class City(Base):
             session.add(self)
         session.commit()
         return self
+
+class Exchange(Base):
+    __tablename__ = 'Exchanges'
+
+    ExchangeId = Column(Integer, primary_key=True, autoincrement=True)
+    CurrencyId = Column(Integer, ForeignKey('Currencies.CurrencyId'))
+    ExchangeName = Column(String(50))
+
+    currency = relationship("Currency", back_populates="exchanges")
+
+    def save(self, session):
+        # Check if the country already exists in the database
+        existing_exchange = session.query(Exchange).filter_by(ExchangeName=self.ExchangeName, CurrencyId = self.CurrencyId).first()
+
+        if existing_exchange:
+            self.ExchangeId = existing_exchange.ExchangeId
+        else:
+            session.add(self)
+        session.commit()
+        return self
     
 class State(Base):
     __tablename__ = 'States'
@@ -77,11 +97,33 @@ class State(Base):
 
     country = relationship("Country", back_populates="states")
 
+    def save(self, session):
+        # Check if the state already exists in the database
+        existing_state = session.query(State).filter_by(StateName=self.StateName, CountryId = self.CountryId).first()
+
+        if existing_state:
+            self.StateIdId = existing_state.StateId
+        else:
+            session.add(self)
+        session.commit()
+        return self
+
 class Industry(Base):
     __tablename__ = 'Industries'
 
     IndustryId = Column(Integer, primary_key=True, autoincrement=True)
     IndustryName = Column(String(255))
+
+    def save(self, session):
+        # Check if the state already exists in the database
+        existing_industry = session.query(Industry).filter_by(IndustryName=self.IndustryName).first()
+
+        if existing_industry:
+            self.IndustryId = existing_industry.IndustryId
+        else:
+            session.add(self)
+        session.commit()
+        return self
 
 class Sector(Base):
     __tablename__ = 'Sectors'
@@ -89,12 +131,33 @@ class Sector(Base):
     SectorId = Column(Integer, primary_key=True, autoincrement=True)
     SectorName = Column(String(255))
 
+    def save(self, session):
+        # Check if the state already exists in the database
+        existing_sector = session.query(Sector).filter_by(SectorName=self.SectorName).first()
+
+        if existing_sector:
+            self.SectorId = existing_sector.SectorId
+        else:
+            session.add(self)
+        session.commit()
+        return self
 class Currency(Base):
     __tablename__ = 'Currencies'
 
     CurrencyId = Column(Integer, primary_key=True, autoincrement=True)
     CurrencyCode = Column(String(3))
     CurrencyName = Column(String(255))
+
+    def save(self, session):
+        # Check if the state already exists in the database
+        existing_currencuy = session.query(Currency).filter_by(CurrencyName=self.CurrencyName, CurrencyCode=self.CurrencyCode).first()
+
+        if existing_currencuy:
+            self.CurrencyId = existing_currencuy.CurrencyId
+        else:
+            session.add(self)
+        session.commit()
+        return self
 
 class Company(Base):
     __tablename__ = 'Companies'
@@ -125,6 +188,18 @@ class Company(Base):
     industry = relationship("Industry", back_populates="companies")
     sector = relationship("Sector", back_populates="companies")
     currency = relationship("Currency", back_populates="companies")
+
+    def save(self, session):
+        # Check if the state already exists in the database
+        existing_company = session.query(State).filter_by(Ticker=self.Ticker, CityId = self.CityId).first()
+
+        if existing_state:
+            self.StateIdId = existing_state.StateId
+        else:
+            session.add(self)
+        session.commit()
+        return self
+
 
 # Define relationships
 City.companies = relationship("Company", order_by=Company.CompanyId, back_populates="city")
