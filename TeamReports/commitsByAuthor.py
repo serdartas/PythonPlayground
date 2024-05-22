@@ -1,3 +1,15 @@
+import requests
+# Configuration
+GITHUB_API_URL = "https://api.github.com"
+ORG = "your_organization"
+REPO = "your_repository"
+TOKEN = "your_github_token"
+
+headers = {
+    "Authorization": f"token {TOKEN}",
+    "Accept": "application/vnd.github.v3+json"
+}
+
 # Fetch commits
 def fetch_commits(page=1, per_page=100):
     url = f"{GITHUB_API_URL}/repos/{ORG}/{REPO}/commits"
