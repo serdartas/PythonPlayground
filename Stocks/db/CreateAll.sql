@@ -16,7 +16,7 @@ USE financeDB ;
 -- Table financeDB.Countries
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS financeDB.Countries (
-  CountryId TINYINT NOT NULL AUTO_INCREMENT,
+  CountryId SMALLINT NOT NULL AUTO_INCREMENT,
   CountryName VARCHAR(255) NULL,
   PRIMARY KEY (CountryId))
 ENGINE = InnoDB;
@@ -26,7 +26,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS financeDB.Cities (
   CityId SMALLINT NOT NULL AUTO_INCREMENT,
-  CountryId TINYINT NULL,
+  CountryId SMALLINT NULL,
   CityName VARCHAR(255) NULL,
   PRIMARY KEY (CityId),
   CONSTRAINT FK_Country_Cities
@@ -41,7 +41,7 @@ CREATE INDEX IF NOT EXISTS FK_Country_Cities_idx ON Cities (CountryId ASC);
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS financeDB.States (
   StateId SMALLINT NOT NULL AUTO_INCREMENT,
-  CountryId TINYINT NULL,
+  CountryId SMALLINT NULL,
   StateName VARCHAR(255) NULL,
   PRIMARY KEY (StateId),
   INDEX fk_States_Countries_idx (CountryId ASC),
@@ -81,6 +81,21 @@ CREATE TABLE IF NOT EXISTS financeDB.Currencies (
   PRIMARY KEY (CurrencyId))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table financeDB.Exchanges
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS financeDB.Exchanges (
+  ExchangeId SMALLINT NOT NULL AUTO_INCREMENT,
+  CurrencyId TINYINT NULL,
+  ExchangeName VARCHAR(255) NULL,
+  PRIMARY KEY (ExchangeId),
+  CONSTRAINT FK_Currency_Exchanges
+    FOREIGN KEY (CurrencyId)
+    REFERENCES financeDB.Currencies (CurrencyId)
+    )
+ENGINE = InnoDB;
+
+CREATE INDEX IF NOT EXISTS FK_Currency_Exchanges_idx ON Exchanges (CurrencyId ASC);
 
 -- -----------------------------------------------------
 -- Table financeDB.Companies
@@ -89,8 +104,8 @@ CREATE TABLE IF NOT EXISTS financeDB.Companies (
   CompanyId SMALLINT NOT NULL AUTO_INCREMENT,
   Ticker CHAR(4) NOT NULL,
   CityId SMALLINT NOT NULL,
-  StateId SMALLINT NULL,
-  IndustryId SMALLINT NULL,
+  StateId SMALLINT NOT NULL,
+  IndustryId SMALLINT NOT NULL,
   BusinessSummary LONGTEXT NULL,
   EmployeeCount INT NULL,
   SectorId SMALLINT NULL,
@@ -100,7 +115,8 @@ CREATE TABLE IF NOT EXISTS financeDB.Companies (
   ShareholderRisk TINYINT NULL,
   OverallRisk TINYINT NULL,
   GovernanceEpochDate DATE NULL,
-  CurrencyId TINYINT NULL,
+  CurrencyId TINYINT NOT NULL,
+  ExchangeId SMALLINT NOT NULL,
   HeldPercentInsiders FLOAT NULL,
   HeldPercentInstitutions FLOAT NULL,
   TotalShares BIGINT NULL,
@@ -112,11 +128,13 @@ CREATE TABLE IF NOT EXISTS financeDB.Companies (
   INDEX fk_Companies_Industries_idx (IndustryId ASC),
   INDEX fk_Companies_Sectors_idx (SectorId ASC),
   INDEX fk_Companies_Currencies_idx (CurrencyId ASC),
+  INDEX fk_Companies_Exchanges_idx (ExchangeId ASC),
   CONSTRAINT fk_Companies_Cities FOREIGN KEY (CityId) REFERENCES financeDB.Cities (CityId),
   CONSTRAINT fk_Companies_States FOREIGN KEY (StateId) REFERENCES financeDB.States (StateId),
   CONSTRAINT fk_Companies_Industries FOREIGN KEY (IndustryId) REFERENCES financeDB.Industries (IndustryId),
   CONSTRAINT fk_Companies_Sectors FOREIGN KEY (SectorId) REFERENCES financeDB.Sectors (SectorId),
-  CONSTRAINT fk_Companies_Currencies FOREIGN KEY (CurrencyId) REFERENCES financeDB.Currencies (CurrencyId))
+  CONSTRAINT fk_Companies_Currencies FOREIGN KEY (CurrencyId) REFERENCES financeDB.Currencies (CurrencyId),
+  CONSTRAINT fk_Companies_Exchanges FOREIGN KEY (ExchangeId) REFERENCES financeDB.Exchanges (ExchangeId))
 ENGINE = InnoDB;
 
 
